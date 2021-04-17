@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static String passReg = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
     public static String letterReg = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
     public static ArrayList<User> userList = new ArrayList<>();
+    public static User currentUser = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 for(User user:userList){
                     if(user.email.equalsIgnoreCase(email) && user.password.equalsIgnoreCase(password)){
                         exist = true;
+                        currentUser = user;
                     }
                 }
 
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if(!exist){
                     Toast.makeText(getBaseContext(), "User does not exist", Toast.LENGTH_SHORT).show();
                 } else{
-                    Intent intent = new Intent(getBaseContext(), SignUp.class);
+                    Intent intent = new Intent(getBaseContext(), SearchBus.class);
                     startActivity(intent);
                 }
             } else {
