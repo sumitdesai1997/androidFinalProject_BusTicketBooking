@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public static String letterReg = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
     public static ArrayList<User> userList = new ArrayList<>();
     public static User currentUser = new User();
+    public static String redirectionFrom = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

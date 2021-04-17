@@ -87,7 +87,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnAddAmount" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/tvCCSection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -100,7 +100,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnHomePage" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/tvCCNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -109,7 +109,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCCSection" />
 
         <EditText
             android:id="@+id/etCCNumber"
@@ -120,10 +120,11 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCCNumber"
+            android:theme="@android:style/Theme.Light"/>
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/tvCCName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -143,10 +144,11 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCCName"
+            android:theme="@android:style/Theme.Light"/>
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/tvExpiry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -167,10 +169,10 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+            app:layout_constraintTop_toBottomOf="@+id/tvExpiry" />
 
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/tvCVV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="95dp"
@@ -178,7 +180,7 @@
             android:text="CVV"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/textView20"
+            app:layout_constraintStart_toEndOf="@+id/tvExpiry"
             app:layout_constraintTop_toBottomOf="@+id/etCCName" />
 
         <EditText
@@ -191,11 +193,12 @@
             android:ems="10"
             android:inputType="numberPassword"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView20"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+            app:layout_constraintStart_toEndOf="@+id/tvExpiry"
+            app:layout_constraintTop_toBottomOf="@+id/tvCVV"
+            android:theme="@android:style/Theme.Light"/>
 
         <TextView
-            android:id="@+id/textView23"
+            android:id="@+id/tvReqAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -215,7 +218,8 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+            app:layout_constraintTop_toBottomOf="@+id/tvReqAmount"
+            android:theme="@android:style/Theme.Light"/>
 
         <Button
             android:id="@+id/btnAddToWallet"

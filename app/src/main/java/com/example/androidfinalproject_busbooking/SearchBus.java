@@ -58,6 +58,7 @@ public class SearchBus extends AppCompatActivity {
 
         btnSignOut.setOnClickListener(new ButtonEvents());
         btnSearchBus.setOnClickListener(new ButtonEvents());
+        imgWallet.setOnClickListener(new ButtonEvents());
 
         ArrayAdapter aa1 = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, fromList);
         spFrom.setAdapter(aa1);
@@ -124,7 +125,9 @@ public class SearchBus extends AppCompatActivity {
                     startActivity(intent);
                 }
             } else{
-
+                MainActivity.redirectionFrom = "Home Page";
+                Intent intent = new Intent(getBaseContext(), Wallet.class);
+                startActivity(intent);
             }
         }
     }
