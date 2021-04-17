@@ -17,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     ImageView imgLogo;
     EditText etEmail, etPassword;
     Button btnSignIn, btnCreateAccount;
+    public static String emailReg = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    public static String passReg = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
+    public static String letterReg = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +46,13 @@ public class MainActivity extends AppCompatActivity {
             if(v.getId() == R.id.btnSignIn) {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
-                String emailReg = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-                String passReg = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
 
                 if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getBaseContext(), " Please enter value for required fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Please enter value for required fields", Toast.LENGTH_SHORT).show();
                 } else if (!Pattern.matches(emailReg,email)){
-                    Toast.makeText(getBaseContext(), " Please enter valid email id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Please enter valid email id", Toast.LENGTH_SHORT).show();
                 } else if (!Pattern.matches(passReg,password)){
-                    Toast.makeText(getBaseContext(), " Please enter at least 8 character that has at least 1 digit, 1 uppercase and 1 lowercase letter", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter", Toast.LENGTH_SHORT).show();
                 } else {
                    Intent intent = new Intent(getBaseContext(), SignUp.class);
                    startActivity(intent);
