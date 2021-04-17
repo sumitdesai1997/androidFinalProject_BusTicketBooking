@@ -2,6 +2,7 @@ package com.example.androidfinalproject_busbooking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,7 +59,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
         } else if(!Pattern.matches(MainActivity.letterReg, sQuestion)){
             Toast.makeText(getBaseContext(),"Please enter valid dog name", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getBaseContext(),"Thank you", Toast.LENGTH_SHORT).show();
+            MainActivity.userList.add(new User(name, email, password, sQuestion,70.0));
+
+            Intent intent = new Intent(getBaseContext(),MainActivity.class);
         }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static String emailReg = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     public static String passReg = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$";
     public static String letterReg = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
+    public static ArrayList<User> userList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
         btnCreateAccount = findViewById(R.id.btnCreateAccount);
+
+        userList.add(new User("John", "john123@gmail.com","12345678@Qq","buzo",70.0));
 
         int imgLogoId = getResources().getIdentifier("buslogo5","mipmap",getPackageName());
         imgLogo.setImageResource(imgLogoId);
@@ -46,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
             if(v.getId() == R.id.btnSignIn) {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
+                boolean exist = false;
+
+                for(User user:userList){
+                    if(user.email.equalsIgnoreCase(email) && user.password.equalsIgnoreCase(password)){
+                        exist = true;
+                    }
+                }
 
                 if(email.isEmpty() || password.isEmpty()){
                     Toast.makeText(getBaseContext(), "Please enter value for required fields", Toast.LENGTH_SHORT).show();
@@ -53,12 +64,15 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Please enter valid email id", Toast.LENGTH_SHORT).show();
                 } else if (!Pattern.matches(passReg,password)){
                     Toast.makeText(getBaseContext(), "Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter", Toast.LENGTH_SHORT).show();
-                } else {
-                   Intent intent = new Intent(getBaseContext(), SignUp.class);
-                   startActivity(intent);
+                } else if(!exist){
+                    Toast.makeText(getBaseContext(), "User does not exist", Toast.LENGTH_SHORT).show();
+                } else{
+                    Intent intent = new Intent(getBaseContext(), SignUp.class);
+                    startActivity(intent);
                 }
             } else {
-
+                Intent intent = new Intent(getBaseContext(), SignUp.class);
+                startActivity(intent);
             }
         }
     }
