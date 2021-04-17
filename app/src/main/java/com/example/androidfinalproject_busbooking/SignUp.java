@@ -62,6 +62,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
             MainActivity.userList.add(new User(name, email, password, sQuestion,70.0));
 
             Intent intent = new Intent(getBaseContext(),MainActivity.class);
+            startActivity(intent);
         }
     }
 }
