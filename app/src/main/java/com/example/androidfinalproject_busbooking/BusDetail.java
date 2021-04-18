@@ -2,13 +2,16 @@ package com.example.androidfinalproject_busbooking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BusDetail extends AppCompatActivity {
 
@@ -18,7 +21,7 @@ public class BusDetail extends AppCompatActivity {
     CheckBox cbFood, cbLiveTracking, cbNetflix, cbSleeper, cbAC, cbElectricalPlug;
     Button btnBookTicket,btnAddAmount1;
 
-    Bus currentBus = new Bus("Great Canadain Travels",  false, false, false,  false, new String[]{"gc1", "gc2", "gc3"},"One of the oldest bus operator from the Canada. This bus will ease your travel from and to Ontario destination.", new String[]{"Mississauga", "Brampton", "Oshawa"}, new String[]{"Bharuch"}, 7.0,  0.95,  10.0);
+    public static Bus currentBus = new Bus("Great Canadain Travels",  false, false, false,  false, new String[]{"gc1", "gc2", "gc3"},"One of the oldest bus operator from the Canada. This bus will ease your travel from and to Ontario destination.", new String[]{"Mississauga", "Brampton", "Oshawa"}, new String[]{"Bharuch"}, 7.0,  0.95,  10.0);
     public static double finalPrice = 0.0;
     public static double service = 0.0;
 
@@ -60,11 +63,21 @@ public class BusDetail extends AppCompatActivity {
         tvBusDetail.setText(currentBus.description);
         tvFinalPrice.setText("$"+finalPrice);
         tvNumberOfSeats.setText("1");
+        btnAddAmount1.setVisibility(View.GONE);
 
         sbNumberOfSeats.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvNumberOfSeats.setText(progress);
+               tvNumberOfSeats.setText(String.valueOf(progress));
+               cbFood.setChecked(false);
+               cbAC.setChecked(false);
+               cbElectricalPlug.setChecked(false);
+               cbLiveTracking.setChecked(false);
+               cbNetflix.setChecked(false);
+               cbSleeper.setChecked(false);
+               service = 0;
+               finalPrice = (currentBus.price * progress);
+               tvFinalPrice.setText("$"+finalPrice);
             }
 
             @Override
@@ -84,6 +97,11 @@ public class BusDetail extends AppCompatActivity {
         cbLiveTracking.setOnCheckedChangeListener(new CheckBoxEvents());
         cbSleeper.setOnCheckedChangeListener(new CheckBoxEvents());
         cbNetflix.setOnCheckedChangeListener(new CheckBoxEvents());
+
+        btnBookTicket.setOnClickListener(new ButtonEvents());
+        btnAddAmount1.setOnClickListener(new ButtonEvents());
+        imgLeft.setOnClickListener(new ButtonEvents());
+        imgRight.setOnClickListener(new ButtonEvents());
     }
 
     public class CheckBoxEvents implements CompoundButton.OnCheckedChangeListener{
@@ -113,6 +131,29 @@ public class BusDetail extends AppCompatActivity {
 
             finalPrice += service;
             tvFinalPrice.setText("$"+finalPrice);
+        }
+    }
+
+    public class ButtonEvents implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.btnBookTicket){
+                if(Integer.parseInt(tvNumberOfSeats.getText().toString()) == 0){
+                    Toast.makeText(getBaseContext(),"User has to choose at least 1 seat",Toast.LENGTH_SHORT).show();
+                } else if(finalPrice > MainActivity.currentUser.balance){
+                    Toast.makeText(getBaseContext(),"User doesn't have sufficient balance in the wallet",Toast.LENGTH_SHORT).show();
+                    btnAddAmount1.setVisibility(View.VISIBLE);
+                } else {
+                    MainActivity.currentUser.balance -= finalPrice;
+                    Intent intent = new Intent(getBaseContext(),BookingConfirmation.class);
+                    startActivity(intent);
+                }
+            } else if(v.getId() == R.id.btnAddAmount1){
+                MainActivity.redirectionFrom = "Booking Page";
+                Intent intent = new Intent(getBaseContext(),Wallet.class);
+                startActivity(intent);
+            }
         }
     }
 

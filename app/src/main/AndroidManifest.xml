@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidFinalProject_BusBooking">
+        <activity android:name=".BookingConfirmation"></activity>
         <activity android:name=".BusDetail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,12 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Wallet"></activity>
+        <activity android:name=".Wallet" />
         <activity android:name=".ShowingResults" />
         <activity android:name=".SearchBus" />
         <activity android:name=".SignUp" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

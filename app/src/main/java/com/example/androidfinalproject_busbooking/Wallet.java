@@ -66,7 +66,7 @@ public class Wallet extends AppCompatActivity {
         btnAddAmount.setOnClickListener(new ButtonEvents());
         btnHomePage.setOnClickListener(new ButtonEvents());
         btnAddToWallet.setOnClickListener(new ButtonEvents());
-        btnAddAmount.setOnClickListener(new ButtonEvents());
+        btnBookingPage.setOnClickListener(new ButtonEvents());
         imgBack.setOnClickListener(new ButtonEvents());
 
         int imgBackId = getResources().getIdentifier("back","mipmap", getPackageName());
@@ -123,7 +123,7 @@ public class Wallet extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), SearchBus.class);
                 startActivity(intent);
             } else if(v.getId() == R.id.btnBookingPage){
-                Intent intent = new Intent(getBaseContext(), SearchBus.class);
+                Intent intent = new Intent(getBaseContext(), BusDetail.class);
                 startActivity(intent);
             } else if(v.getId() == R.id.btnAddToWallet){
 
