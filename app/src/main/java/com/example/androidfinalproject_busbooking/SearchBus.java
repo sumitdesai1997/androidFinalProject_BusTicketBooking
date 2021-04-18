@@ -33,6 +33,7 @@ public class SearchBus extends AppCompatActivity {
     public static HashMap<String,String> priceList = new HashMap<>();
     public static String fromCity = "";
     public static String toCity = "";
+    public static String stringDate = "";
     public static double ticketPrice = 0.0;
     public static ArrayList<Bus> busList = new ArrayList<>();
 
@@ -73,7 +74,8 @@ public class SearchBus extends AppCompatActivity {
         java.sql.Date todaydate=new java.sql.Date(millis);
         String ArrtodayDate[] = todaydate.toString().split("-");
 
-        tvDate.setText(getMonthLetter(Integer.parseInt(ArrtodayDate[1])-1).toString() + " "+ ArrtodayDate[2] + ", " + ArrtodayDate[0]);
+        stringDate = getMonthLetter(Integer.parseInt(ArrtodayDate[1])-1).toString() + " "+ ArrtodayDate[2] + ", " + ArrtodayDate[0];
+        tvDate.setText(stringDate);
 
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -87,7 +89,7 @@ public class SearchBus extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String monthLetter = getMonthLetter(month) ;
-                        String stringDate = monthLetter + " " + dayOfMonth + ", " + year;
+                        stringDate = monthLetter + " " + dayOfMonth + ", " + year;
                         tvDate.setText(stringDate);
                     }
                 },year,month,day
@@ -121,7 +123,7 @@ public class SearchBus extends AppCompatActivity {
                         }
                     }
 
-                    Intent intent = new Intent(getBaseContext(), ShowingResults.class);
+                    Intent intent = new Intent(getBaseContext(), BusDetail.class);
                     startActivity(intent);
                 }
             } else{

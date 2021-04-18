@@ -24,6 +24,8 @@ public class BusDetail extends AppCompatActivity {
     public static Bus currentBus = new Bus("Great Canadain Travels",  false, false, false,  false, new String[]{"gc1", "gc2", "gc3"},"One of the oldest bus operator from the Canada. This bus will ease your travel from and to Ontario destination.", new String[]{"Mississauga", "Brampton", "Oshawa"}, new String[]{"Bharuch"}, 7.0,  0.95,  10.0);
     public static double finalPrice = 0.0;
     public static double service = 0.0;
+    public static int noOfSeats = 1;
+    public  static String serviceDetails= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class BusDetail extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                tvNumberOfSeats.setText(String.valueOf(progress));
+               noOfSeats = progress;
                cbFood.setChecked(false);
                cbAC.setChecked(false);
                cbElectricalPlug.setChecked(false);
@@ -145,6 +148,32 @@ public class BusDetail extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),"User doesn't have sufficient balance in the wallet",Toast.LENGTH_SHORT).show();
                     btnAddAmount1.setVisibility(View.VISIBLE);
                 } else {
+
+                    if(cbFood.isChecked()){
+                        serviceDetails += "Food,";
+                    }
+                    if(cbLiveTracking.isChecked()){
+                        serviceDetails += " Live Tracking,";
+                    }
+                    if(cbNetflix.isChecked()){
+                        serviceDetails += " Netflix,";
+                    }
+                    if(cbElectricalPlug.isChecked()){
+                        serviceDetails += " Electric plug,";
+                    }
+                    if(cbAC.isChecked()){
+                        serviceDetails += " AC,";
+                    }
+                    if(cbSleeper.isChecked()){
+                        serviceDetails += " Sleeper";
+                    }
+
+                    if (serviceDetails.equals("")) {
+                        serviceDetails = "No extra service choosen";
+                    } else if (!serviceDetails.contains("Sleeper")){
+                        serviceDetails = serviceDetails.substring(0, serviceDetails.length() - 1);
+                    }
+
                     MainActivity.currentUser.balance -= finalPrice;
                     Intent intent = new Intent(getBaseContext(),BookingConfirmation.class);
                     startActivity(intent);
