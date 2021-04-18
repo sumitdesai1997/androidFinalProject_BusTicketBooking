@@ -2,15 +2,18 @@ package com.example.androidfinalproject_busbooking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class Wallet extends AppCompatActivity {
@@ -66,9 +69,37 @@ public class Wallet extends AppCompatActivity {
         btnAddAmount.setOnClickListener(new ButtonEvents());
         imgBack.setOnClickListener(new ButtonEvents());
 
-
         int imgBackId = getResources().getIdentifier("back","mipmap", getPackageName());
         imgBack.setImageResource(imgBackId);
+
+        // getting today's date and separating day, month and year and putting that value to array
+        long millis=System.currentTimeMillis();
+        java.sql.Date todaydate=new java.sql.Date(millis);
+        String ArrtodayDate[] = todaydate.toString().split("-");
+
+        tvCCExpiry.setText(SearchBus.getMonthLetter(Integer.parseInt(ArrtodayDate[1])-1).toString() + " "+ ArrtodayDate[2] + ", " + ArrtodayDate[0]);
+
+        Calendar cal = Calendar.getInstance();
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+
+        tvCCExpiry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dpDialog = new DatePickerDialog(Wallet.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String monthLetter = SearchBus.getMonthLetter(month) ;
+                        String stringDate = monthLetter + " " + dayOfMonth + ", " + year;
+                        tvCCExpiry.setText(stringDate);
+                    }
+                },year,month,day
+                );
+                dpDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                dpDialog.show();
+            }
+        });
     }
 
     private class ButtonEvents implements View.OnClickListener{
@@ -101,14 +132,14 @@ public class Wallet extends AppCompatActivity {
                 String CVV = etCVV.getText().toString();
                 String ReqAmount = etReqAmount.getText().toString();
 
-                String CCNumberReg = "^(d{16})$";
-                String CVVReg = "^(d{3})$";
+                String CCNumberReg = "[0-9]{16}";
+                String CVVReg = "[0-9]{3}";
 
                 if(CCNumber.isEmpty() || CCName.isEmpty() || CVV.isEmpty() || ReqAmount.isEmpty()){
                     Toast.makeText(getBaseContext(), "Please enter value for required fields", Toast.LENGTH_SHORT).show();
                     return;
-                } /*else if(!Pattern.matches(CCNumberReg, CCNumber)){
-                    Toast.makeText(getBaseContext(),"Plese enter valid 16 digit number",Toast.LENGTH_SHORT).show();
+                } else if(!Pattern.matches(CCNumberReg, CCNumber)){
+                    Toast.makeText(getBaseContext(),"Plese enter valid 16 digit credit card number",Toast.LENGTH_SHORT).show();
                     return;
                 } else if(!Pattern.matches(MainActivity.letterReg, CCName)){
                     Toast.makeText(getBaseContext(),"Plese enter valid name",Toast.LENGTH_SHORT).show();
@@ -119,7 +150,7 @@ public class Wallet extends AppCompatActivity {
                 } else if(!Pattern.matches(CVVReg, ReqAmount)){
                     Toast.makeText(getBaseContext(),"Maximum limit to add is $999",Toast.LENGTH_SHORT).show();
                     return;
-                }*/
+                }
 
                 MainActivity.currentUser.balance += Double.parseDouble(ReqAmount);
                 Toast.makeText(getBaseContext(),"Your account is credited with $"+ ReqAmount,Toast.LENGTH_SHORT).show();
@@ -139,12 +170,15 @@ public class Wallet extends AppCompatActivity {
                 btnAddToWallet.setVisibility(View.GONE);
                 if(MainActivity.redirectionFrom.equalsIgnoreCase("Home Page")){
                     btnHomePage.setVisibility(View.VISIBLE);
-                } else if(MainActivity.redirectionFrom.equalsIgnoreCase("Booking")) {
+                } else if(MainActivity.redirectionFrom.equalsIgnoreCase("Booking Page")) {
                     btnBookingPage.setVisibility(View.VISIBLE);
                 }
             } else{
-                Intent intent = new Intent(getBaseContext(), SearchBus.class);
-                startActivity(intent);
+                if(MainActivity.redirectionFrom.equalsIgnoreCase("Home Page")){
+                    btnHomePage.setVisibility(View.VISIBLE);
+                } else if(MainActivity.redirectionFrom.equalsIgnoreCase("Booking Page")) {
+                    btnBookingPage.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

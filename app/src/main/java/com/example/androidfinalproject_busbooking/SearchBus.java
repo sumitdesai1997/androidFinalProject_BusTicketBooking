@@ -155,7 +155,6 @@ public class SearchBus extends AppCompatActivity {
     }
 
     public static void fillData(){
-
          priceList.clear();
         priceList.put("TM1" , "9");
         priceList.put("TB1" , "14");

@@ -72,6 +72,7 @@
             android:layout_marginTop="25dp"
             android:text="Home page"
             android:textStyle="bold"
+            app:iconTint="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAddAmount" />
 
@@ -83,6 +84,7 @@
             android:layout_marginEnd="20dp"
             android:text="Booking page"
             android:textStyle="bold"
+            app:iconTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAddAmount" />
 
@@ -106,6 +108,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="25dp"
             android:text="Credit card number"
+            android:textColor="#808080"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -166,6 +169,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:text="today"
+            android:textColor="#490398"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"

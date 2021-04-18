@@ -139,6 +139,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:text="Select the date"
+            android:textColor="#490398"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
