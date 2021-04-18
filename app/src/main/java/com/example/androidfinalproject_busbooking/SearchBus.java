@@ -1,8 +1,10 @@
 package com.example.androidfinalproject_busbooking;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -109,7 +111,8 @@ public class SearchBus extends AppCompatActivity {
                 startActivity(intent);
             } else if(v.getId() == R.id.btnSearchBus){
                 if(fromCity.equals(toCity)){
-                    Toast.makeText(getBaseContext(),"From city and To city can not be the same", Toast.LENGTH_SHORT).show();
+                    alertBox("From city and To city can not be the same");
+                    //Toast.makeText(getBaseContext(),"From city and To city can not be the same", Toast.LENGTH_SHORT).show();
                     return;
                 } else{
                     Character from0 = fromCity.charAt(0);
@@ -225,5 +228,21 @@ public class SearchBus extends AppCompatActivity {
             return "Dec";
         }
         return "";
+    }
+
+    public void alertBox(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(SearchBus.this);
+        builder.setTitle("Alert");
+        builder.setMessage(message);
+
+        builder.setCancelable(false);
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 }

@@ -1,7 +1,9 @@
 package com.example.androidfinalproject_busbooking;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,22 +49,44 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
         String sQuestion = etSecurityQuestion.getText().toString();
 
         if(name.isEmpty() || email.isEmpty() || password.isEmpty() || cPassword.isEmpty() || sQuestion.isEmpty()){
-            Toast.makeText(getBaseContext(),"Please enter value for required fields", Toast.LENGTH_SHORT).show();
+            alertBox("Please enter value for required fields");
+            //Toast.makeText(getBaseContext(),"Please enter value for required fields", Toast.LENGTH_SHORT).show();
         } else if(!Pattern.matches(MainActivity.letterReg, name)){
-            Toast.makeText(getBaseContext(),"Please enter valid name", Toast.LENGTH_SHORT).show();
+            alertBox("Please enter valid name");
+            //Toast.makeText(getBaseContext(),"Please enter valid name", Toast.LENGTH_SHORT).show();
         } else if(!Pattern.matches(MainActivity.emailReg,email)){
-            Toast.makeText(getBaseContext(),"Please enter valid email", Toast.LENGTH_SHORT).show();
+            alertBox("Please enter valid email");
+            //Toast.makeText(getBaseContext(),"Please enter valid email", Toast.LENGTH_SHORT).show();
         } else if(!Pattern.matches(MainActivity.passReg, password)){
-            Toast.makeText(getBaseContext(),"Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter", Toast.LENGTH_SHORT).show();
+            alertBox("Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter");
+            //Toast.makeText(getBaseContext(),"Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter", Toast.LENGTH_SHORT).show();
         } else if(!password.equals(cPassword)){
-            Toast.makeText(getBaseContext(),"Password and Confirm Password should be the exact match", Toast.LENGTH_SHORT).show();
+            alertBox("Password and Confirm Password should be the exact match");
+            //Toast.makeText(getBaseContext(),"Password and Confirm Password should be the exact match", Toast.LENGTH_SHORT).show();
         } else if(!Pattern.matches(MainActivity.letterReg, sQuestion)){
-            Toast.makeText(getBaseContext(),"Please enter valid dog name", Toast.LENGTH_SHORT).show();
+            alertBox("Please enter valid dog name");
+            //Toast.makeText(getBaseContext(),"Please enter valid dog name", Toast.LENGTH_SHORT).show();
         } else {
             MainActivity.userList.add(new User(name, email, password, sQuestion,70.0));
 
             Intent intent = new Intent(getBaseContext(),MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    public void alertBox(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
+        builder.setTitle("Alert");
+        builder.setMessage(message);
+
+        builder.setCancelable(false);
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 }

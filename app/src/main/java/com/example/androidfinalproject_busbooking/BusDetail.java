@@ -1,7 +1,9 @@
 package com.example.androidfinalproject_busbooking;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -144,9 +146,11 @@ public class BusDetail extends AppCompatActivity {
         public void onClick(View v) {
             if(v.getId() == R.id.btnBookTicket){
                 if(Integer.parseInt(tvNumberOfSeats.getText().toString()) == 0){
-                    Toast.makeText(getBaseContext(),"User has to choose at least 1 seat",Toast.LENGTH_SHORT).show();
+                    alertBox("User has to choose at least 1 seat");
+                    //Toast.makeText(getBaseContext(),"User has to choose at least 1 seat",Toast.LENGTH_SHORT).show();
                 } else if(finalPrice > MainActivity.currentUser.balance){
-                    Toast.makeText(getBaseContext(),"User doesn't have sufficient balance in the wallet",Toast.LENGTH_SHORT).show();
+                    alertBox("User doesn't have sufficient balance in the wallet");
+                    //Toast.makeText(getBaseContext(),"User doesn't have sufficient balance in the wallet",Toast.LENGTH_SHORT).show();
                     btnAddAmount1.setVisibility(View.VISIBLE);
                 } else {
 
@@ -197,6 +201,22 @@ public class BusDetail extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void alertBox(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(BusDetail.this);
+        builder.setTitle("Alert");
+        builder.setMessage(message);
+
+        builder.setCancelable(false);
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 
 }

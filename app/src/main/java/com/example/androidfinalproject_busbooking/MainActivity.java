@@ -1,7 +1,9 @@
 package com.example.androidfinalproject_busbooking;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -64,13 +66,17 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getBaseContext(), "Please enter value for required fields", Toast.LENGTH_SHORT).show();
+                    alertBox("Please enter value for required fields");
+                    //Toast.makeText(getBaseContext(), "Please enter value for required fields", Toast.LENGTH_SHORT).show();
                 } else if (!Pattern.matches(emailReg,email)){
-                    Toast.makeText(getBaseContext(), "Please enter valid email id", Toast.LENGTH_SHORT).show();
+                    alertBox("Please enter valid email id");
+                    //Toast.makeText(getBaseContext(), "Please enter valid email id", Toast.LENGTH_SHORT).show();
                 } else if (!Pattern.matches(passReg,password)){
-                    Toast.makeText(getBaseContext(), "Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter", Toast.LENGTH_SHORT).show();
+                    alertBox("Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter");
+                    //Toast.makeText(getBaseContext(), "Please enter at least 8 character that has at least 1 digit, 1 special character , 1 uppercase and 1 lowercase letter", Toast.LENGTH_SHORT).show();
                 } else if(!exist){
-                    Toast.makeText(getBaseContext(), "User does not exist", Toast.LENGTH_SHORT).show();
+                    alertBox("Account does not exist");
+                    //Toast.makeText(getBaseContext(), "User does not exist", Toast.LENGTH_SHORT).show();
                 } else{
                     Intent intent = new Intent(getBaseContext(), SearchBus.class);
                     startActivity(intent);
@@ -80,5 +86,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+    }
+
+    public void alertBox(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Alert");
+        builder.setMessage(message);
+
+        builder.setCancelable(false);
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 }

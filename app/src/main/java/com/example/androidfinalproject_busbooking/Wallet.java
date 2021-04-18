@@ -1,8 +1,10 @@
 package com.example.androidfinalproject_busbooking;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -136,23 +138,29 @@ public class Wallet extends AppCompatActivity {
                 String CVVReg = "[0-9]{3}";
 
                 if(CCNumber.isEmpty() || CCName.isEmpty() || CVV.isEmpty() || ReqAmount.isEmpty()){
-                    Toast.makeText(getBaseContext(), "Please enter value for required fields", Toast.LENGTH_SHORT).show();
+                    alertBox("Please enter value for required fields","Alert");
+                    //Toast.makeText(getBaseContext(), "Please enter value for required fields", Toast.LENGTH_SHORT).show();
                     return;
                 } else if(!Pattern.matches(CCNumberReg, CCNumber)){
-                    Toast.makeText(getBaseContext(),"Plese enter valid 16 digit credit card number",Toast.LENGTH_SHORT).show();
+                    alertBox("Please enter valid 16 digit credit card numbe","Alert");
+                    //Toast.makeText(getBaseContext(),"Please enter valid 16 digit credit card number",Toast.LENGTH_SHORT).show();
                     return;
                 } else if(!Pattern.matches(MainActivity.letterReg, CCName)){
-                    Toast.makeText(getBaseContext(),"Plese enter valid name",Toast.LENGTH_SHORT).show();
+                    alertBox("Please enter valid name","Alert");
+                    //Toast.makeText(getBaseContext(),"Please enter valid name",Toast.LENGTH_SHORT).show();
                     return;
                 } else if(!Pattern.matches(CVVReg, CVV)){
-                    Toast.makeText(getBaseContext(),"Plese enter valid 3 digit CVV",Toast.LENGTH_SHORT).show();
+                    alertBox("Please enter valid 3 digit CVV","Alert");
+                    //Toast.makeText(getBaseContext(),"Please enter valid 3 digit CVV",Toast.LENGTH_SHORT).show();
                     return;
                 } else if(!Pattern.matches(CVVReg, ReqAmount)){
-                    Toast.makeText(getBaseContext(),"Maximum limit to add is $999",Toast.LENGTH_SHORT).show();
+                    alertBox("Maximum limit to add is $999","Alert");
+                    //Toast.makeText(getBaseContext(),"Maximum limit to add is $999",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 MainActivity.currentUser.balance += Double.parseDouble(ReqAmount);
+                alertBox("Your account is credited with $"+ ReqAmount,"Information");
                 Toast.makeText(getBaseContext(),"Your account is credited with $"+ ReqAmount,Toast.LENGTH_SHORT).show();
                 tvBalance.setText("$"+MainActivity.currentUser.balance);
 
@@ -184,4 +192,21 @@ public class Wallet extends AppCompatActivity {
             }
         }
     }
+
+    public void alertBox(String message, String title){
+        AlertDialog.Builder builder = new AlertDialog.Builder(Wallet.this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+
+        builder.setCancelable(false);
+        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+    }
+
 }
