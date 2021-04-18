@@ -25,7 +25,8 @@ public class BusDetail extends AppCompatActivity {
     public static double finalPrice = 0.0;
     public static double service = 0.0;
     public static int noOfSeats = 1;
-    public  static String serviceDetails= "";
+    public static String serviceDetails= "";
+    public static int initial = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +183,18 @@ public class BusDetail extends AppCompatActivity {
                 MainActivity.redirectionFrom = "Booking Page";
                 Intent intent = new Intent(getBaseContext(),Wallet.class);
                 startActivity(intent);
+            } else if(v.getId() == R.id.imgLeft){
+                    if(initial != 0){
+                        int imgBusId = getResources().getIdentifier(currentBus.images[initial-1],"mipmap",getPackageName());
+                        imgBus.setImageResource(imgBusId);
+                        initial -= 1;
+                    }
+            } else{
+                if(initial != currentBus.images.length-1){
+                    int imgBusId = getResources().getIdentifier(currentBus.images[initial+1],"mipmap",getPackageName());
+                    imgBus.setImageResource(imgBusId);
+                    initial += 1;
+                }
             }
         }
     }

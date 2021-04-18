@@ -57,7 +57,7 @@ public class BookingConfirmation extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-           if(v.getId() == R.id.btnHomePage){
+           if(v.getId() == R.id.btnHomepage){
                Intent intent = new Intent(getBaseContext(),SearchBus.class);
                startActivity(intent);
            } else{
