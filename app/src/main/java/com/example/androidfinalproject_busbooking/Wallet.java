@@ -175,9 +175,11 @@ public class Wallet extends AppCompatActivity {
                 }
             } else{
                 if(MainActivity.redirectionFrom.equalsIgnoreCase("Home Page")){
-                    btnHomePage.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(getBaseContext(), SearchBus.class);
+                    startActivity(intent);
                 } else if(MainActivity.redirectionFrom.equalsIgnoreCase("Booking Page")) {
-                    btnBookingPage.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(getBaseContext(), BusDetail.class);
+                    startActivity(intent);
                 }
             }
         }
