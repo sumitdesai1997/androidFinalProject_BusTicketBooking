@@ -17,12 +17,14 @@ import android.widget.Toast;
 
 public class BusDetail extends AppCompatActivity {
 
+    // creating objects for the designing elements
     TextView tvBusName, tvBusDetail, tvNumberOfSeats, tvFinalPrice;
     ImageView imgBus, imgLeft, imgRight;
     SeekBar sbNumberOfSeats;
     CheckBox cbFood, cbLiveTracking, cbNetflix, cbSleeper, cbAC, cbElectricalPlug;
     Button btnBookTicket,btnAddAmount1;
 
+    // creating global public static variable that can be accessible for all activities
     public static Bus currentBus = new Bus("Great Canadain Travels",  false, false, false,  false, new String[]{"gc1", "gc2", "gc3"},"One of the oldest bus operator from the Canada. This bus will ease your travel from and to Ontario destination.", new String[]{"Mississauga", "Brampton", "Oshawa"}, new String[]{"Bharuch"}, 7.0,  0.95,  10.0);
     public static double finalPrice = 0.0;
     public static double service = 0.0;
@@ -35,6 +37,7 @@ public class BusDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_detail);
 
+        // assigning value to the objects by finding the view by id
         tvBusName = findViewById(R.id.tvBusName);
         tvBusDetail = findViewById(R.id.tvBusDetail);
         tvNumberOfSeats = findViewById(R.id.tvNumberOfSeats);
@@ -54,6 +57,7 @@ public class BusDetail extends AppCompatActivity {
 
         tvBusName.setText(currentBus.busName);
 
+        // setting image for the left arrow, right arrow and bus itself
         int imgLeftId = getResources().getIdentifier("left","mipmap",getPackageName());
         imgLeft.setImageResource(imgLeftId);
 
@@ -65,22 +69,30 @@ public class BusDetail extends AppCompatActivity {
 
         finalPrice = currentBus.price;
 
+        // assigning value to the text field
         tvBusDetail.setText(currentBus.description);
         tvFinalPrice.setText("$"+finalPrice);
         tvNumberOfSeats.setText("1");
+
+        // hiding the button add amount on page load
         btnAddAmount1.setVisibility(View.GONE);
 
+        // change listener event for number of seats seekbar
         sbNumberOfSeats.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                tvNumberOfSeats.setText(String.valueOf(progress));
                noOfSeats = progress;
+
+               // making all checkboxes unchecked
                cbFood.setChecked(false);
                cbAC.setChecked(false);
                cbElectricalPlug.setChecked(false);
                cbLiveTracking.setChecked(false);
                cbNetflix.setChecked(false);
                cbSleeper.setChecked(false);
+
+               // changing final price
                service = 0;
                finalPrice = (currentBus.price * progress);
                tvFinalPrice.setText("$"+finalPrice);
@@ -97,6 +109,7 @@ public class BusDetail extends AppCompatActivity {
             }
         });
 
+        // on checked change listener event for checkboxes
         cbFood.setOnCheckedChangeListener(new CheckBoxEvents());
         cbAC.setOnCheckedChangeListener(new CheckBoxEvents());
         cbElectricalPlug.setOnCheckedChangeListener(new CheckBoxEvents());
@@ -104,18 +117,23 @@ public class BusDetail extends AppCompatActivity {
         cbSleeper.setOnCheckedChangeListener(new CheckBoxEvents());
         cbNetflix.setOnCheckedChangeListener(new CheckBoxEvents());
 
+        //  on click listener event for buttons, left arrow and right arrow
         btnBookTicket.setOnClickListener(new ButtonEvents());
         btnAddAmount1.setOnClickListener(new ButtonEvents());
         imgLeft.setOnClickListener(new ButtonEvents());
         imgRight.setOnClickListener(new ButtonEvents());
     }
 
+    // class for checkbox event listener and implementing onCheckedChanged method
     public class CheckBoxEvents implements CompoundButton.OnCheckedChangeListener{
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            // subtracting the service value from the final price as now service will be calculated again
             finalPrice -= service;
             service = 0.0;
+
+            // adding value to services as per user selection
             if(cbFood.isChecked()){
                 service += (2.0 * Double.parseDouble(tvNumberOfSeats.getText().toString()));
             }
@@ -135,16 +153,19 @@ public class BusDetail extends AppCompatActivity {
                 service += (0.75 * Double.parseDouble(tvNumberOfSeats.getText().toString()));
             }
 
+            // adding service value to final ticket price
             finalPrice += service;
             tvFinalPrice.setText("$"+finalPrice);
         }
     }
 
+    // class for button event listener and implementing onClick method
     public class ButtonEvents implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.btnBookTicket){
+                // validations on the click of book ticket button
                 if(Integer.parseInt(tvNumberOfSeats.getText().toString()) == 0){
                     alertBox("User has to choose at least 1 seat");
                     //Toast.makeText(getBaseContext(),"User has to choose at least 1 seat",Toast.LENGTH_SHORT).show();
@@ -154,6 +175,7 @@ public class BusDetail extends AppCompatActivity {
                     btnAddAmount1.setVisibility(View.VISIBLE);
                 } else {
 
+                    // preparing string that holds the name of the services
                     if(cbFood.isChecked()){
                         serviceDetails += "Food,";
                     }
@@ -179,21 +201,25 @@ public class BusDetail extends AppCompatActivity {
                         serviceDetails = serviceDetails.substring(0, serviceDetails.length() - 1);
                     }
 
+                    // redirecting to the booking confirmation screen
                     MainActivity.currentUser.balance -= finalPrice;
                     Intent intent = new Intent(getBaseContext(),BookingConfirmation.class);
                     startActivity(intent);
                 }
             } else if(v.getId() == R.id.btnAddAmount1){
+                // redirecting to the wallet screen
                 MainActivity.redirectionFrom = "Booking Page";
                 Intent intent = new Intent(getBaseContext(),Wallet.class);
                 startActivity(intent);
             } else if(v.getId() == R.id.imgLeft){
+                // changing bus image on the click of left arrow
                     if(initial != 0){
                         int imgBusId = getResources().getIdentifier(currentBus.images[initial-1],"mipmap",getPackageName());
                         imgBus.setImageResource(imgBusId);
                         initial -= 1;
                     }
             } else{
+                // changing bus image on the click of right arrow
                 if(initial != currentBus.images.length-1){
                     int imgBusId = getResources().getIdentifier(currentBus.images[initial+1],"mipmap",getPackageName());
                     imgBus.setImageResource(imgBusId);
@@ -203,6 +229,7 @@ public class BusDetail extends AppCompatActivity {
         }
     }
 
+    // method that will display the alert dialog
     public void alertBox(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(BusDetail.this);
         builder.setTitle("Alert");

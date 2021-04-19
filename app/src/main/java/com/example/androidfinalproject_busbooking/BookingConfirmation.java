@@ -13,6 +13,7 @@ import java.util.Random;
 
 public class BookingConfirmation extends AppCompatActivity {
 
+    // creating objects for the designing elements
     ImageView imageView;
     TextView tvBookingNo, tvUsername,tvFromCity,tvToCity,tvDateOfTravel,tvBusName1,tvNumberOfSeats1,tvServices,tvTotPayment;
     Button btnHomepage,btnSignout;
@@ -22,6 +23,7 @@ public class BookingConfirmation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_confirmation);
 
+        // assigning value to the objects by finding the view by id
         imageView = findViewById(R.id.imageView);
         tvBookingNo = findViewById(R.id.tvBookingNo);
         tvUsername = findViewById(R.id.tvUsername);
@@ -35,10 +37,14 @@ public class BookingConfirmation extends AppCompatActivity {
         btnHomepage = findViewById(R.id.btnHomepage);
         btnSignout = findViewById(R.id.btnSignout);
 
+        // setting the confirmed tick image
         int imageViewId = getResources().getIdentifier("confirm","mipmap",getPackageName());
         imageView.setImageResource(imageViewId);
 
+        // generating 6 digit random number for booking number
         int bookingNo = get6digitNumber();
+
+        // assigning value to the text field for the user and ticket related information
         tvBookingNo.setText(String.valueOf(bookingNo));
         tvUsername.setText(MainActivity.currentUser.name);
         tvFromCity.setText(SearchBus.fromCity);
@@ -49,24 +55,29 @@ public class BookingConfirmation extends AppCompatActivity {
         tvServices.setText(BusDetail.serviceDetails);
         tvTotPayment.setText(String.valueOf(BusDetail.finalPrice));
 
+        // on click listener event for Home page and Sign out button
         btnHomepage.setOnClickListener(new ButtonEvents());
         btnSignout.setOnClickListener(new ButtonEvents());
     }
 
+    // class for button event listener and implementing onClick method
     public class ButtonEvents implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
            if(v.getId() == R.id.btnHomepage){
+               // redirecting to the search bus page
                Intent intent = new Intent(getBaseContext(),SearchBus.class);
                startActivity(intent);
            } else{
+               // redirecting to the sign in page
                Intent intent = new Intent(getBaseContext(),MainActivity.class);
                startActivity(intent);
            }
         }
     }
 
+    // method to generate 6 digit number
     public static int get6digitNumber() {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);

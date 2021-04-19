@@ -1,5 +1,6 @@
 package com.example.androidfinalproject_busbooking;
 
+// bus class that contains the blueprint of bus
 public class Bus {
     String busName;
     boolean isExpress;
@@ -14,6 +15,7 @@ public class Bus {
     double multiplier;
     double price;
 
+    // constructor for the bus class
     public Bus(String busName, boolean isExpress, boolean isSleeper, boolean hasAC, boolean hasWifi, String[] images, String description, String[] from, String[] to, double review, double multiplier, double price) {
         this.busName = busName;
         this.isExpress = isExpress;

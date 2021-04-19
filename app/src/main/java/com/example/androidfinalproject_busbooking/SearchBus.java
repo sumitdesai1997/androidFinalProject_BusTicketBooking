@@ -25,11 +25,13 @@ import java.util.Map;
 
 public class SearchBus extends AppCompatActivity {
 
+    // creating objects for the designing elements
     TextView tvWelcome,tvDate;
     ImageView imgWallet;
     Button btnSignOut, btnSearchBus;
     Spinner spFrom, spTo;
 
+    // creating global public static variable that can be accessible for all activities
     String fromList[] = {"Toronto", "Mississauga", "Brampton", "Oshawa", "Hamilton", "Kitchner"};
     String toList[] = {"Mississauga", "Toronto", "Brampton", "Oshawa", "Hamilton", "Kitchner"};
     public static HashMap<String,String> priceList = new HashMap<>();
@@ -44,6 +46,7 @@ public class SearchBus extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_bus);
 
+        // assigning value to the objects by finding the view by id
         tvWelcome = findViewById(R.id.tvWelcome);
         tvDate = findViewById(R.id.tvDate);
         imgWallet = findViewById(R.id.imgWallet);
@@ -52,21 +55,27 @@ public class SearchBus extends AppCompatActivity {
         spFrom = findViewById(R.id.spFrom);
         spTo = findViewById(R.id.spTo);
 
+        // call method that will fill the date for the bus list and the price list
         fillData();
 
+        // setting the greeting message
         tvWelcome.setText("Hi " + MainActivity.currentUser.name);
 
+        // seeting the image for the wallet
         int imgWalletid = getResources().getIdentifier("wallet","mipmap", getPackageName());
         imgWallet.setImageResource(imgWalletid);
 
+        // on click listener event for Sign out, Search bus button and wallet image
         btnSignOut.setOnClickListener(new ButtonEvents());
         btnSearchBus.setOnClickListener(new ButtonEvents());
         imgWallet.setOnClickListener(new ButtonEvents());
 
+        // making adapter object and setting that adapter for the spinner to show the name of city for from city
         ArrayAdapter aa1 = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, fromList);
         spFrom.setAdapter(aa1);
         spFrom.setOnItemSelectedListener(new SpinnerEvents());
 
+         // making adapter object and setting that adapter for the spinner to show the name of city for to city
         ArrayAdapter aa2 = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, toList);
         spTo.setAdapter(aa2);
         spTo.setOnItemSelectedListener(new SpinnerEvents());
@@ -76,6 +85,7 @@ public class SearchBus extends AppCompatActivity {
         java.sql.Date todaydate=new java.sql.Date(millis);
         String ArrtodayDate[] = todaydate.toString().split("-");
 
+        // date into the string format
         stringDate = getMonthLetter(Integer.parseInt(ArrtodayDate[1])-1).toString() + " "+ ArrtodayDate[2] + ", " + ArrtodayDate[0];
         tvDate.setText(stringDate);
 
@@ -84,32 +94,41 @@ public class SearchBus extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
 
+        // on click listener event for the textview
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // creating date picker dialog object
                 DatePickerDialog dpDialog = new DatePickerDialog(SearchBus.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // changing the string date as per the date selected by the user
                         String monthLetter = getMonthLetter(month) ;
                         stringDate = monthLetter + " " + dayOfMonth + ", " + year;
                         tvDate.setText(stringDate);
                     }
                 },year,month,day
                 );
+
+                // disabling the paste date
                 dpDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                // showing the date picket dialog
                 dpDialog.show();
             }
         });
     }
 
+    // class for button event listener and implementing onClick method
     private class ButtonEvents implements  View.OnClickListener{
 
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.btnSignOut){
+                // redirecting to the sign in page
                 Intent intent = new Intent(getBaseContext(),MainActivity.class);
                 startActivity(intent);
             } else if(v.getId() == R.id.btnSearchBus){
+                //validations on the click of search bus button
                 if(fromCity.equals(toCity)){
                     alertBox("From city and To city can not be the same");
                     //Toast.makeText(getBaseContext(),"From city and To city can not be the same", Toast.LENGTH_SHORT).show();
@@ -118,6 +137,7 @@ public class SearchBus extends AppCompatActivity {
                     Character from0 = fromCity.charAt(0);
                     Character to0 = toCity.charAt(0);
 
+                    // looping through the price list and fetching the price for the required journey
                     for(Map.Entry<String, String> price: priceList.entrySet()){
                         Character price0 = price.getKey().charAt(0);
                         Character price1 = price.getKey().charAt(1);
@@ -126,10 +146,12 @@ public class SearchBus extends AppCompatActivity {
                         }
                     }
 
+                    // redirecting to the bus detail page
                     Intent intent = new Intent(getBaseContext(), BusDetail.class);
                     startActivity(intent);
                 }
             } else{
+                // redirecting to the wallet page
                 MainActivity.redirectionFrom = "Home Page";
                 Intent intent = new Intent(getBaseContext(), Wallet.class);
                 startActivity(intent);
@@ -137,6 +159,7 @@ public class SearchBus extends AppCompatActivity {
         }
     }
 
+    // class for spinner event listener and implementing onItemSelected, onNothingSelected method
     private class SpinnerEvents implements AdapterView.OnItemSelectedListener{
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -159,6 +182,7 @@ public class SearchBus extends AppCompatActivity {
         }
     }
 
+    // method to fill data for price list and bus list
     public static void fillData(){
          priceList.clear();
         priceList.put("TM1" , "9");
@@ -201,6 +225,7 @@ public class SearchBus extends AppCompatActivity {
         busList.add(new Bus("Pacific Western Travels",  true,  false, true, true, new String[]{"pw1", "pw2", "pw3"},"One of the highly reputed bus operator in Toronto since last 10 years. This bus provides many optional services from which user can select the service they need.", new String[]{"Kitchner", "Oshawa"}, new String[]{"Bharuch"}, 8.0,  0.90,  0.0));
     }
 
+    // method to reutn month name against the integer number
     public static String getMonthLetter(int month){
         if(month == 0){
             return "Jan";
@@ -230,6 +255,7 @@ public class SearchBus extends AppCompatActivity {
         return "";
     }
 
+    // method that will display the alert dialog
     public void alertBox(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchBus.this);
         builder.setTitle("Alert");
