@@ -25,7 +25,7 @@ public class BusDetail extends AppCompatActivity {
     Button btnBookTicket,btnAddAmount1;
 
     // creating global public static variable that can be accessible for all activities
-    public static Bus currentBus = new Bus("Great Canadain Travels",  false, false, false,  false, new String[]{"gc1", "gc2", "gc3"},"One of the oldest bus operator from the Canada. This bus will ease your travel from and to Ontario destination.", new String[]{"Mississauga", "Brampton", "Oshawa"}, new String[]{"Bharuch"}, 7.0,  0.95,  10.0);
+    //public static Bus currentBus = new Bus("Great Canadain Travels",  false, false, false,  false, new String[]{"gc1", "gc2", "gc3"},"One of the oldest bus operator from the Canada. This bus will ease your travel from and to Ontario destination.", new String[]{"Mississauga", "Brampton", "Oshawa"}, new String[]{"Bharuch"}, 7.0,  0.95,  10.0);
     public static double finalPrice = 0.0;
     public static double service = 0.0;
     public static int noOfSeats = 1;
@@ -55,7 +55,7 @@ public class BusDetail extends AppCompatActivity {
         btnBookTicket = findViewById(R.id.btnBookTicket);
         btnAddAmount1 = findViewById(R.id.btnAddAmount1);
 
-        tvBusName.setText(currentBus.busName);
+        tvBusName.setText(SearchBus.currentBus.busName);
 
         // setting image for the left arrow, right arrow and bus itself
         int imgLeftId = getResources().getIdentifier("left","mipmap",getPackageName());
@@ -64,13 +64,13 @@ public class BusDetail extends AppCompatActivity {
         int imgRightId = getResources().getIdentifier("right","mipmap",getPackageName());
         imgRight.setImageResource(imgRightId);
 
-        int imgBusId = getResources().getIdentifier(currentBus.images[0],"mipmap",getPackageName());
+        int imgBusId = getResources().getIdentifier(SearchBus.currentBus.images[0],"mipmap",getPackageName());
         imgBus.setImageResource(imgBusId);
 
-        finalPrice = currentBus.price;
+        finalPrice = SearchBus.currentBus.price;
 
         // assigning value to the text field
-        tvBusDetail.setText(currentBus.description);
+        tvBusDetail.setText(SearchBus.currentBus.description);
         tvFinalPrice.setText("$"+finalPrice);
         tvNumberOfSeats.setText("1");
 
@@ -94,7 +94,7 @@ public class BusDetail extends AppCompatActivity {
 
                // changing final price
                service = 0;
-               finalPrice = (currentBus.price * progress);
+               finalPrice = (SearchBus.currentBus.price * progress);
                tvFinalPrice.setText("$"+finalPrice);
             }
 
@@ -214,14 +214,14 @@ public class BusDetail extends AppCompatActivity {
             } else if(v.getId() == R.id.imgLeft){
                 // changing bus image on the click of left arrow
                     if(initial != 0){
-                        int imgBusId = getResources().getIdentifier(currentBus.images[initial-1],"mipmap",getPackageName());
+                        int imgBusId = getResources().getIdentifier(SearchBus.currentBus.images[initial-1],"mipmap",getPackageName());
                         imgBus.setImageResource(imgBusId);
                         initial -= 1;
                     }
             } else{
                 // changing bus image on the click of right arrow
-                if(initial != currentBus.images.length-1){
-                    int imgBusId = getResources().getIdentifier(currentBus.images[initial+1],"mipmap",getPackageName());
+                if(initial != SearchBus.currentBus.images.length-1){
+                    int imgBusId = getResources().getIdentifier(SearchBus.currentBus.images[initial+1],"mipmap",getPackageName());
                     imgBus.setImageResource(imgBusId);
                     initial += 1;
                 }

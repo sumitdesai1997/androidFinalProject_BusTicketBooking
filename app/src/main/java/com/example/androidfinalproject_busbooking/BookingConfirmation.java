@@ -50,7 +50,7 @@ public class BookingConfirmation extends AppCompatActivity {
         tvFromCity.setText(SearchBus.fromCity);
         tvToCity.setText(SearchBus.toCity);
         tvDateOfTravel.setText(SearchBus.stringDate);
-        tvBusName1.setText(BusDetail.currentBus.busName);
+        tvBusName1.setText(SearchBus.currentBus.busName);
         tvNumberOfSeats1.setText(String.valueOf(BusDetail.noOfSeats));
         tvServices.setText(BusDetail.serviceDetails);
         tvTotPayment.setText(String.valueOf(BusDetail.finalPrice));

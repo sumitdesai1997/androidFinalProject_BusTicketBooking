@@ -40,6 +40,7 @@ public class SearchBus extends AppCompatActivity {
     public static String stringDate = "";
     public static double ticketPrice = 0.0;
     public static ArrayList<Bus> busList = new ArrayList<>();
+    public static Bus currentBus = new Bus();
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +147,12 @@ public class SearchBus extends AppCompatActivity {
                         }
                     }
 
+                    for(Bus bus: busList){
+                        bus.price = Double.parseDouble(String.format("%.2f",ticketPrice * bus.multiplier));
+                    }
+
                     // redirecting to the bus detail page
-                    Intent intent = new Intent(getBaseContext(), BusDetail.class);
+                    Intent intent = new Intent(getBaseContext(), ShowingResults.class);
                     startActivity(intent);
                 }
             } else{

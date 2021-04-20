@@ -30,4 +30,19 @@ public class Bus {
         this.multiplier = multiplier;
         this.price = price;
     }
+
+    public Bus(){
+        this.busName = "";
+        this.isExpress = false;
+        this.isSleeper = false;
+        this.hasAC = false;
+        this.hasWifi = false;
+        this.images = new String[]{};
+        this.description = "";
+        this.from = new String[]{};
+        this.to = new String[]{};
+        this.review = 0.0;
+        this.multiplier = 0.0;
+        this.price = 0.0;
+    }
 }
