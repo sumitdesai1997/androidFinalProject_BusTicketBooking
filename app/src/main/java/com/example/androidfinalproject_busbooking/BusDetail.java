@@ -95,7 +95,7 @@ public class BusDetail extends AppCompatActivity {
                // changing final price
                service = 0;
                finalPrice = (SearchBus.currentBus.price * progress);
-               tvFinalPrice.setText("$"+finalPrice);
+               tvFinalPrice.setText("$"+String.format("%.2f",finalPrice));
             }
 
             @Override
@@ -155,7 +155,7 @@ public class BusDetail extends AppCompatActivity {
 
             // adding service value to final ticket price
             finalPrice += service;
-            tvFinalPrice.setText("$"+finalPrice);
+            tvFinalPrice.setText("$"+String.format("%.2f",finalPrice));
         }
     }
 
